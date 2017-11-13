@@ -1,6 +1,7 @@
 package ml.group;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
 
@@ -27,23 +28,42 @@ public class Node {
         entropy = computeEntropyForDataList(nodeData, table);
 
         // TODO if necessary --> make this a leaf!
+        if(entropy == 0)
+        {
+            if(nodeData.size() > 0)
+                assignedClass = nodeData.get(0).carValue;
+            System.out.println("reached a leaf! This leaf has the value " + assignedClass);
+            return;
+        }
 
+        int highestGainIndex = findChildWithHighestGain(nodeData, table);
+
+        if(highestGainIndex < 0)
+            System.out.println("Stuff is not working yet");
+
+        childNodes = splitNodeIntoChildren(highestGainIndex, table);
+    }
+
+    int findChildWithHighestGain(ArrayList<CarData> data, DataTranslationTable table)
+    {
         float[] gains = new float[table.getNumberOfAttributes()];
         int highestGainIndex = -1;
         float highestGain = -1;
         for(int i = 0; i < gains.length; i++)
         {
-            gains[i] = computeGainForAttribute(i, table);
+            gains[i] = computeGainForAttribute(data, i, table);
             if(gains[i] > highestGain)
             {
                 highestGain = gains[i];
                 highestGainIndex = i;
             }
         }
-        if(highestGain < 0 || highestGainIndex < 0)
-            System.out.println("Stuff is not working yet");
+        return highestGainIndex;
+    }
 
-        childNodes = new ArrayList<Node>();
+    ArrayList<Node> splitNodeIntoChildren(int highestGainIndex, DataTranslationTable table)
+    {
+        ArrayList<Node> result = new ArrayList<Node>();
         ArrayList<ArrayList<CarData>> childDatas = new ArrayList<>();
         for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++)
         {
@@ -55,8 +75,9 @@ public class Node {
         }
 
         for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
-            childNodes.add(new Node(childDatas.get(i), table, highestGainIndex, i));
+            result.add(new Node(childDatas.get(i), table, highestGainIndex, i));
         }
+        return result;
     }
 
     float computeEntropyForDataList(ArrayList<CarData> data, DataTranslationTable table)
@@ -64,9 +85,10 @@ public class Node {
         int[] split = new int[table.getNumberOfClasses()];
         float result = 0;
 
-        if(data.size() <= 0)
+        if(data.size() <= 0) {
             System.out.println("No Data to compute Entropy with!");
-
+            return 0;
+        }
         for(CarData cd : data)
         {
             split[cd.carValue]++;
@@ -81,7 +103,7 @@ public class Node {
         return result;
     }
 
-    float computeGainForAttribute(int attribute, DataTranslationTable table)
+    float computeGainForAttribute(ArrayList<CarData> data, int attribute, DataTranslationTable table)
     {
         float gain = 0;
         int[] classSplitForAttribute = new int[table.getNumberOfClasses()];
@@ -98,33 +120,15 @@ public class Node {
             childDatas.add(new ArrayList<>());
         }
 
-        for(CarData cd : nodeData)
+        for(CarData cd : data)
         {
             childDatas.get(cd.carAttributes[attribute]).add(cd);
         }
-/*
-        for(int i = 0; i < table.getNumberOfValuesForAttribute(attribute); i++)
-        {
-            childEntropies[i] = computeEntropyForDataList(childDatas.get(i), table);
 
-            // TODO delete when this works!!
-            /*int[] split = new int[table.getNumberOfClasses()];
-            for(CarData cd : childDatas.get(i))
-            {
-                split[cd.carValue]++;
-            }
-            childEntropies[i] = 0;
-            for(int j = 0; j < table.getNumberOfClasses(); j++)
-            {
-                float pj  = (split[j] / (float)childDatas.get(j).size());
-                childEntropies[i] += - pj * (Math.log(pj) / Math.log(table.getNumberOfClasses()));
-            }
-        }
-*/
         gain = entropy;
         for(int i = 0; i < table.getNumberOfValuesForAttribute(attribute); i++)
         {
-            gain -= (childDatas.get(i).size() / (float) nodeData.size()) * computeEntropyForDataList(childDatas.get(i), table);
+            gain -= (childDatas.get(i).size() / (float) data.size()) * computeEntropyForDataList(childDatas.get(i), table);
         }
 
         return gain;
