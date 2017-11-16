@@ -55,7 +55,7 @@ public class Node {
             if(nodeData.size() > 0)
                 assignedClass = nodeData.get(0).carValue;
             System.out.println("reached a leaf! This leaf has the value " + assignedClass);
-            return;
+            //return;
         }
 
         int highestGainIndex = findChildWithHighestGain(nodeData, table);
@@ -95,18 +95,26 @@ public class Node {
         {
             treeNode = doc.createElement("node");
             String str = "";
-            for(int i=0; i<childDatas.size(); i++){
-                str += table.attributeValueMap.get(highestGainIndex)[childDatas.get(i).get(0).carAttributes[highestGainIndex]];
-                str += ":"+Integer.toString(childDatas.get(i).size());
-                if(i!=childDatas.size()-1) str+=",";
+            if(entropy != 0) {
+                for (int i = 0; i < childDatas.size(); i++) {
+                    str += table.attributeValueMap.get(highestGainIndex)[childDatas.get(i).get(0).carAttributes[highestGainIndex]];
+                    str += ":" + Integer.toString(childDatas.get(i).size());
+                    if (i != childDatas.size() - 1) str += ",";
+                }
+
+                treeNode.setAttribute("classes", str);
             }
-            treeNode.setAttribute("classes", str);
+            else{
+                treeNode.setAttribute("classes", table.attributeNames[previousFilteredAttribute].toString()+":"+Integer.toString(data.size()));
+                Text t1 = doc.createTextNode(table.carValues[assignedClass]+"");
+                treeNode.appendChild(t1);
+            }
             treeNode.setAttribute("entropy", Float.toString(Math.round(entropy * 100) / 100.0f));
             treeNode.setAttribute(table.attributeNames[previousFilteredAttribute].toString(), table.attributeValueMap.get(previousFilteredAttribute)[filteredValue].toString());
             parentNode.appendChild(treeNode);
         }
         //endregion XML OUTPUT
-
+        if(entropy == 0) return;
         // TODO do not create child node if it would be empty
         for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
             if(childDatas.get(i).size() < 1)
@@ -114,14 +122,6 @@ public class Node {
             result.add(new Node(childDatas.get(i), table, doc, treeNode, highestGainIndex, i));
         }
         childNodes = result;
-    }
-
-    private String ToString(String[] strings) {
-        String children = "";
-        for (String str : strings) {
-            children += str;
-        }
-        return children;
     }
 
 
