@@ -16,7 +16,7 @@ public class DataTranslationTable {
 
     public DataTranslationTable()
     {
-//        carValues = new String[] {"unacc", "acc", "good", "vgood"};
+        carValues = new String[] {"unacc", "acc", "good", "vgood"};
         attributeNames = new String[]{"buying", "maint", "doors", "persons", "lug_boot", "safety"};
 
         attributeValueMap = new HashMap<>();
@@ -46,7 +46,7 @@ public class DataTranslationTable {
     {
         for(int i = 0; i < arr.length; i++)
         {
-            if(s == arr[i]) return i;
+            if(s.equals(arr[i])) return i;
         }
         return -1;
     }

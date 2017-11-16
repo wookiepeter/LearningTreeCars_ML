@@ -30,7 +30,8 @@ public class ID3TreeLearner {
     {
         ArrayList<CarData> result = new ArrayList<>();
         try {
-            File file = new File("car.c45-names");
+            File.listRoots();
+            File file = new File("data/car.data");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             // StringBuffer stringBuffer = new StringBuffer();

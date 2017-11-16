@@ -92,7 +92,7 @@ public class Node {
         }
         for(CarData cd : nodeData)
         {
-            childDatas.get(cd.carValue).add(cd);
+            childDatas.get(cd.carAttributes[highestGainIndex]).add(cd);
         }
 
         // TODO do not create child node if it would be empty
@@ -125,7 +125,7 @@ public class Node {
         for(int j = 0; j < classCounter.length; j++)
         {
             float pj  = (classCounter[j] / (float)data.size());
-            result += (- pj * (Math.log(pj) / Math.log(classCounter.length)));
+            result += (- pj * (((pj == 0)? 1 : Math.log(pj)) / Math.log(classCounter.length)));
         }
 
         return result;
