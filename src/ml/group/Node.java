@@ -63,24 +63,66 @@ public class Node {
         if(highestGainIndex < 0)
             System.out.println("Stuff is not working yet");
 
+
+
+        ArrayList<Node> result = new ArrayList<Node>();
+        ArrayList<ArrayList<CarData>> childDatas = new ArrayList<>();
+        for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++)
+        {
+            childDatas.add(new ArrayList<>());
+        }
+        for(CarData cd : nodeData)
+        {
+            childDatas.get(cd.carAttributes[highestGainIndex]).add(cd);
+        }
+
+        //region XML OUTPUT
         Element treeNode;
         if(parentNode == null)
         {
             treeNode = doc.createElement("tree");
-            treeNode.setAttribute("classes", "children");
+            String str = "";
+            for(int i=0; i<childDatas.size(); i++){
+                str += table.attributeValueMap.get(highestGainIndex)[childDatas.get(i).get(0).carAttributes[highestGainIndex]];
+                str += ":"+Integer.toString(childDatas.get(i).size());
+                if(i!=childDatas.size()-1) str+=",";
+            }
+            treeNode.setAttribute("classes", str);
+            treeNode.setAttribute("entropy", Float.toString(Math.round(entropy * 100) / 100.0f));
             doc.appendChild(treeNode);
         }
         else
         {
             treeNode = doc.createElement("node");
-            treeNode.setAttribute("classes", "children");
-            treeNode.setAttribute("entrophy", Float.toString(Math.round(entropy * 100) / 100.0f));
+            String str = "";
+            for(int i=0; i<childDatas.size(); i++){
+                str += table.attributeValueMap.get(highestGainIndex)[childDatas.get(i).get(0).carAttributes[highestGainIndex]];
+                str += ":"+Integer.toString(childDatas.get(i).size());
+                if(i!=childDatas.size()-1) str+=",";
+            }
+            treeNode.setAttribute("classes", str);
+            treeNode.setAttribute("entropy", Float.toString(Math.round(entropy * 100) / 100.0f));
             treeNode.setAttribute(table.attributeNames[previousFilteredAttribute].toString(), table.attributeValueMap.get(previousFilteredAttribute)[filteredValue].toString());
             parentNode.appendChild(treeNode);
         }
-        childNodes = splitNodeIntoChildren(highestGainIndex, table, doc, treeNode);
+        //endregion XML OUTPUT
+
+        // TODO do not create child node if it would be empty
+        for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
+            if(childDatas.get(i).size() < 1)
+                continue;
+            result.add(new Node(childDatas.get(i), table, doc, treeNode, highestGainIndex, i));
+        }
+        childNodes = result;
     }
 
+    private String ToString(String[] strings) {
+        String children = "";
+        for (String str : strings) {
+            children += str;
+        }
+        return children;
+    }
 
 
     int findChildWithHighestGain(ArrayList<CarData> data, DataTranslationTable table)
@@ -99,28 +141,6 @@ public class Node {
             }
         }
         return highestGainIndex;
-    }
-
-    ArrayList<Node> splitNodeIntoChildren(int highestGainIndex, DataTranslationTable table, Document doc, Element parentNode)
-    {
-        ArrayList<Node> result = new ArrayList<Node>();
-        ArrayList<ArrayList<CarData>> childDatas = new ArrayList<>();
-        for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++)
-        {
-            childDatas.add(new ArrayList<>());
-        }
-        for(CarData cd : nodeData)
-        {
-            childDatas.get(cd.carAttributes[highestGainIndex]).add(cd);
-        }
-
-        // TODO do not create child node if it would be empty
-        for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
-            if(childDatas.get(i).size() < 1)
-                continue;
-            result.add(new Node(childDatas.get(i), table, doc, parentNode, highestGainIndex, i));
-        }
-        return result;
     }
 
     float computeEntropyForDataList(ArrayList<CarData> data, DataTranslationTable table)
