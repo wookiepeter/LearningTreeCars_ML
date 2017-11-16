@@ -1,16 +1,17 @@
 package ml.group;
 
-import java.util.ArrayList;
+import org.w3c.dom.Document;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+import java.io.*;
+import java.util.ArrayList;
 
 public class ID3TreeLearner {
 
     DataTranslationTable table;
-
     ArrayList<CarData> completeDataList;
 
     Node root;
@@ -20,10 +21,35 @@ public class ID3TreeLearner {
         completeDataList = readCarDataFromFile();
     }
 
-    public void buildTree()
-    {
+    public void buildTree() throws Exception{
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
+        //creating a new instance of a DOM to build a DOM tree.
+        Document doc = docBuilder.newDocument();
         // builds tree recursively!
-        root = new Node(completeDataList, table);
+        root = new Node(completeDataList, table, doc);
+
+        //TransformerFactory instance is used to create Transformer objects.
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer();
+
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        // create string from xml tree
+        StringWriter sw = new StringWriter();
+        StreamResult result = new StreamResult(sw);
+        DOMSource source = new DOMSource(doc);
+        transformer.transform(source, result) ;
+        String xmlString = sw.toString();
+
+        File file = new File("newxml.xml");
+        BufferedWriter bw = new BufferedWriter
+                (new OutputStreamWriter(new FileOutputStream(file)));
+        bw.write(xmlString);
+        bw.flush();
+        bw.close();
+        // print xml
+        System.out.println("Xml file created is :\n" + xmlString);
     }
 
     public ArrayList<CarData> readCarDataFromFile()

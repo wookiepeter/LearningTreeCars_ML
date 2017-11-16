@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tree classes="children">
+<node classes="children" entrophy="0.61" safety="med">
+<node classes="children" entrophy="0.68" persons="4">
+<node buying="vhigh" classes="children" entrophy="0.41">
+<node classes="children" entrophy="0.5" maint="med">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="low">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+</node>
+<node buying="high" classes="children" entrophy="0.48">
+<node classes="children" entrophy="0.48" lug_boot="med">
+<node classes="children" doors="4" entrophy="0.41"/>
+<node classes="children" doors="5more" entrophy="0.41"/>
+</node>
+<node classes="children" entrophy="0.41" lug_boot="big"/>
+</node>
+<node buying="med" classes="children" entrophy="0.65">
+<node classes="children" entrophy="0.5" maint="vhigh">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="high">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="low">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+</node>
+<node buying="low" classes="children" entrophy="0.65">
+<node classes="children" entrophy="0.5" maint="vhigh">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="med">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="low">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+</node>
+</node>
+<node classes="children" entrophy="0.69" persons="more">
+<node buying="vhigh" classes="children" entrophy="0.44">
+<node classes="children" entrophy="0.49" maint="med">
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.49" maint="low">
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+</node>
+<node buying="high" classes="children" entrophy="0.49">
+<node classes="children" entrophy="0.49" lug_boot="med">
+<node classes="children" entrophy="0.41" maint="high"/>
+<node classes="children" entrophy="0.41" maint="med"/>
+<node classes="children" entrophy="0.41" maint="low"/>
+</node>
+<node classes="children" entrophy="0.41" lug_boot="big"/>
+</node>
+<node buying="med" classes="children" entrophy="0.67">
+<node classes="children" entrophy="0.49" maint="vhigh">
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.49" maint="high">
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.21" maint="med">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.64" maint="low">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+</node>
+<node buying="low" classes="children" entrophy="0.71">
+<node classes="children" entrophy="0.49" maint="vhigh">
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.21" maint="high">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.64" maint="med">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.64" maint="low">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+</node>
+</node>
+</node>
+<node classes="children" entrophy="0.81" safety="high">
+<node classes="children" entrophy="0.83" persons="4">
+<node buying="vhigh" classes="children" entrophy="0.5"/>
+<node buying="high" classes="children" entrophy="0.41"/>
+<node buying="med" classes="children" entrophy="0.65">
+<node classes="children" entrophy="0.5" maint="med">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="low">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+</node>
+<node buying="low" classes="children" entrophy="0.78">
+<node classes="children" entrophy="0.5" maint="high">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="med">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.5" maint="low">
+<node classes="children" entrophy="0.5" lug_boot="med"/>
+</node>
+</node>
+</node>
+<node classes="children" entrophy="0.85" persons="more">
+<node buying="vhigh" classes="children" entrophy="0.5">
+<node classes="children" entrophy="0.21" maint="med">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.21" maint="low">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+</node>
+<node buying="high" classes="children" entrophy="0.45">
+<node classes="children" entrophy="0.21" maint="high">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.21" maint="med">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.21" maint="low">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+</node>
+<node buying="med" classes="children" entrophy="0.8">
+<node classes="children" entrophy="0.21" maint="vhigh">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.21" maint="high">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.64" maint="med">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.64" maint="low">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+</node>
+<node buying="low" classes="children" entrophy="0.89">
+<node classes="children" entrophy="0.21" maint="vhigh">
+<node classes="children" doors="2" entrophy="0.46"/>
+</node>
+<node classes="children" entrophy="0.64" maint="high">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.64" maint="med">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+<node classes="children" entrophy="0.64" maint="low">
+<node classes="children" entrophy="0.41" lug_boot="small"/>
+<node classes="children" entrophy="0.41" lug_boot="med"/>
+</node>
+</node>
+</node>
+</node>
+</tree>

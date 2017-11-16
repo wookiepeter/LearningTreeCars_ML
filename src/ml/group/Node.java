@@ -1,5 +1,7 @@
 package ml.group;
 
+import org.w3c.dom.*;
+
 import java.util.ArrayList;
 
 public class Node {
@@ -27,9 +29,9 @@ public class Node {
      * @param data
      * @param table
      */
-    public Node(ArrayList<CarData> data, DataTranslationTable table)
+    public Node(ArrayList<CarData> data, DataTranslationTable table, Document doc)
     {
-        this(data, table, -1, -1);
+        this(data, table, doc, null,-1, -1);
     }
 
     /**
@@ -39,7 +41,7 @@ public class Node {
      * @param previousFilteredAttribute
      * @param filteredValue
      */
-    public Node(ArrayList<CarData> data, DataTranslationTable table, int previousFilteredAttribute, int filteredValue)
+    public Node(ArrayList<CarData> data, DataTranslationTable table, Document doc, Element parentNode, int previousFilteredAttribute, int filteredValue)
     {
         nodeData = data;
         this.previousFilteredAttribute = previousFilteredAttribute;
@@ -61,8 +63,25 @@ public class Node {
         if(highestGainIndex < 0)
             System.out.println("Stuff is not working yet");
 
-        childNodes = splitNodeIntoChildren(highestGainIndex, table);
+        Element treeNode;
+        if(parentNode == null)
+        {
+            treeNode = doc.createElement("tree");
+            treeNode.setAttribute("classes", "children");
+            doc.appendChild(treeNode);
+        }
+        else
+        {
+            treeNode = doc.createElement("node");
+            treeNode.setAttribute("classes", "children");
+            treeNode.setAttribute("entrophy", Float.toString(Math.round(entropy * 100) / 100.0f));
+            treeNode.setAttribute(table.attributeNames[previousFilteredAttribute].toString(), table.attributeValueMap.get(previousFilteredAttribute)[filteredValue].toString());
+            parentNode.appendChild(treeNode);
+        }
+        childNodes = splitNodeIntoChildren(highestGainIndex, table, doc, treeNode);
     }
+
+
 
     int findChildWithHighestGain(ArrayList<CarData> data, DataTranslationTable table)
     {
@@ -82,7 +101,7 @@ public class Node {
         return highestGainIndex;
     }
 
-    ArrayList<Node> splitNodeIntoChildren(int highestGainIndex, DataTranslationTable table)
+    ArrayList<Node> splitNodeIntoChildren(int highestGainIndex, DataTranslationTable table, Document doc, Element parentNode)
     {
         ArrayList<Node> result = new ArrayList<Node>();
         ArrayList<ArrayList<CarData>> childDatas = new ArrayList<>();
@@ -99,7 +118,7 @@ public class Node {
         for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
             if(childDatas.get(i).size() < 1)
                 continue;
-            result.add(new Node(childDatas.get(i), table, highestGainIndex, i));
+            result.add(new Node(childDatas.get(i), table, doc, parentNode, highestGainIndex, i));
         }
         return result;
     }
@@ -111,7 +130,7 @@ public class Node {
 
         // TODO do stuff if list is empty
         if(data.size() <= 0) {
-            System.out.println("No Data to compute Entropy with!");
+            //System.out.println("No Data to compute Entropy with!");
             return 0;
         }
 
