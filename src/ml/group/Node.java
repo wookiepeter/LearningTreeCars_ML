@@ -18,7 +18,13 @@ public class Node {
     ArrayList<Node> childNodes;
 
 
-    // TODO make constructor for root node!
+    /**
+     * Constructor for ChildNodes!
+     * @param data
+     * @param table
+     * @param filteredAttribute
+     * @param filteredValue
+     */
     public Node(ArrayList<CarData> data, DataTranslationTable table, int filteredAttribute, int filteredValue)
     {
         nodeData = data;
@@ -27,7 +33,7 @@ public class Node {
 
         entropy = computeEntropyForDataList(nodeData, table);
 
-        // TODO if necessary --> make this a leaf!
+        // make this a leaf!
         if(entropy == 0)
         {
             if(nodeData.size() > 0)
@@ -42,6 +48,40 @@ public class Node {
             System.out.println("Stuff is not working yet");
 
         childNodes = splitNodeIntoChildren(highestGainIndex, table);
+    }
+
+    // TODO use this for initialization
+    /**
+     * Constructor for Root-Node!
+     * @param data
+     * @param table
+     */
+    public Node(ArrayList<CarData> data, DataTranslationTable table)
+    {
+        nodeData = data;
+
+        entropy = computeEntropyForDataList(nodeData, table);
+
+        // make this a leaf!
+        if(entropy == 0)
+        {
+            if(nodeData.size() > 0)
+                assignedClass = nodeData.get(0).carValue;
+            System.out.println("reached a leaf! This leaf has the value " + assignedClass);
+            return;
+        }
+
+        int highestGainIndex = findChildWithHighestGain(nodeData, table);
+
+        filteredAttribute = highestGainIndex;
+        // because we are Root;
+        filteredValue = -1;
+
+        if(highestGainIndex < 0)
+            System.out.println("Stuff is not working yet");
+
+        childNodes = splitNodeIntoChildren(highestGainIndex, table);
+
     }
 
     int findChildWithHighestGain(ArrayList<CarData> data, DataTranslationTable table)
