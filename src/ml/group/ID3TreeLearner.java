@@ -18,15 +18,12 @@ public class ID3TreeLearner {
     public ID3TreeLearner() {
         table = new DataTranslationTable();
         completeDataList = readCarDataFromFile();
-
-        // builds tree recursively!
-        root = new Node(completeDataList, table);
-
     }
 
     public void buildTree()
     {
-
+        // builds tree recursively!
+        root = new Node(completeDataList, table);
     }
 
     public ArrayList<CarData> readCarDataFromFile()

@@ -16,7 +16,7 @@ public class DataTranslationTable {
 
     public DataTranslationTable()
     {
-        carValues = new String[] {"unacc", "acc", "good", "vgood"};
+//        carValues = new String[] {"unacc", "acc", "good", "vgood"};
         attributeNames = new String[]{"buying", "maint", "doors", "persons", "lug_boot", "safety"};
 
         attributeValueMap = new HashMap<>();

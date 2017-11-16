@@ -10,6 +10,4 @@ public class CarData {
         carValue = _carValue;
         carAttributes = _attributes;
     }
-
-
 }
