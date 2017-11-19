@@ -22,33 +22,37 @@ public class ID3TreeLearner {
     }
 
     public void buildTree() throws Exception{
+        //prepare a document for xml output
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
         //creating a new instance of a DOM to build a DOM tree.
         Document doc = docBuilder.newDocument();
-        // builds tree recursively!
+
+        //main part: build tree recursively!
         root = new Node(completeDataList, table, doc);
 
-        //TransformerFactory instance is used to create Transformer objects.
+        //TransformerFactory instance is used to create Transformer objects
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
 
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-        // create string from xml tree
+        //create String from xml tree
         StringWriter sw = new StringWriter();
         StreamResult result = new StreamResult(sw);
         DOMSource source = new DOMSource(doc);
         transformer.transform(source, result) ;
         String xmlString = sw.toString();
 
-        File file = new File("newxml.xml");
+        //write data into xml File
+        File file = new File("CarDataTree.xml");
         BufferedWriter bw = new BufferedWriter
                 (new OutputStreamWriter(new FileOutputStream(file)));
         bw.write(xmlString);
         bw.flush();
         bw.close();
-        // print xml
+
+        //print xml
         System.out.println("Xml file created is :\n" + xmlString);
     }
 

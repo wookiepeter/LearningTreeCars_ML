@@ -23,7 +23,6 @@ public class Node {
 
     ArrayList<Node> childNodes;
 
-    // TODO use this for initialization
     /**
      * Constructor for Root-Node!
      * @param data
@@ -49,15 +48,6 @@ public class Node {
 
         entropy = computeEntropyForDataList(nodeData, table);
 
-        // make this a leaf!
-        if(entropy == 0)
-        {
-            if(nodeData.size() > 0)
-                assignedClass = nodeData.get(0).carValue;
-            System.out.println("reached a leaf! This leaf has the value " + assignedClass);
-            //return;
-        }
-
         int highestGainIndex = findChildWithHighestGain(nodeData, table);
 
         if(highestGainIndex < 0)
@@ -76,8 +66,10 @@ public class Node {
             childDatas.get(cd.carAttributes[highestGainIndex]).add(cd);
         }
 
-        //region XML OUTPUT
+        //#region create XML treeNode
         Element treeNode;
+
+        //for root
         if(parentNode == null)
         {
             treeNode = doc.createElement("tree");
@@ -91,6 +83,7 @@ public class Node {
             treeNode.setAttribute("entropy", Float.toString(Math.round(entropy * 100) / 100.0f));
             doc.appendChild(treeNode);
         }
+        //for other nodes
         else
         {
             treeNode = doc.createElement("node");
@@ -113,14 +106,22 @@ public class Node {
             treeNode.setAttribute(table.attributeNames[previousFilteredAttribute].toString(), table.attributeValueMap.get(previousFilteredAttribute)[filteredValue].toString());
             parentNode.appendChild(treeNode);
         }
-        //endregion XML OUTPUT
-        if(entropy == 0) return;
-        // TODO do not create child node if it would be empty
+        //#endregion XML treeNode
+
+        //catch leafs
+        if(entropy == 0){if(nodeData.size() > 0)
+            assignedClass = nodeData.get(0).carValue;
+            System.out.println("reached a leaf! This leaf has the value " + assignedClass);
+            return;
+        }
+
+        //create new child nodes
         for(int i = 0; i < table.getNumberOfValuesForAttribute(highestGainIndex); i++) {
             if(childDatas.get(i).size() < 1)
                 continue;
             result.add(new Node(childDatas.get(i), table, doc, treeNode, highestGainIndex, i));
         }
+
         childNodes = result;
     }
 
