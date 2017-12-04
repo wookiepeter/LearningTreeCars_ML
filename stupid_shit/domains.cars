@@ -1,0 +1,10 @@
+/*----------------------------------------------------------------------
+  domains
+----------------------------------------------------------------------*/
+dom(buying) = { high, low, med, vhigh };
+dom(maint) = { high, low, med, vhigh };
+dom(doors) = { 2, 3, 4, 5more };
+dom(persons) = { 2, 4, more };
+dom(lug_boot) = { big, med, small };
+dom(safety) = { high, low, med };
+dom(class) = { acc, good, unacc, vgood };
